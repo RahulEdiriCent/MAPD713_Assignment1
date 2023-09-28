@@ -26,13 +26,31 @@ let restify = require('restify')
 server.use(restify.plugins.fullResponse());
 server.use(restify.plugins.bodyParser());
 
-server.get("/products", function(req,res,next){
+server.get('/products', function(req,res,next){
     console.log("get all");
 
     productsDB.find({}, function(error, products){
         ++GET_COUNTER
         console.log("TEST: Gets: " + GET_COUNTER + "| Posts: " + POST_COUNTER )
         res.send(products);
+    })
+})
+
+server.post('/products', function(req, res, next){
+    console.log("Post")
+
+
+    let newProduct= {
+        productId: req.body.productId,
+        name: req.body.name,
+        price: req.body.price,
+        quantity: req.body.quantity
+    }
+
+    productsDB.create( newProduct, function (error, product){
+        ++POST_COUNTER
+        console.log("TEST: Gets: " + GET_COUNTER + "| Posts: " + POST_COUNTER )
+        res.send(201, product)
     })
 })
 
