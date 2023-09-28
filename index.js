@@ -9,8 +9,8 @@ let errors = require('restify-errors');
 let restify = require('restify')
 
 
-  // Get a persistence engine for the users
-  , usersSave = require('save')('users')
+  // Get a persistence engine for the products
+  , productsDB = require('save')('products')
 
   // Create the restify server
   , server = restify.createServer({ name: SERVER_NAME})
@@ -19,12 +19,21 @@ let restify = require('restify')
   console.log('Server %s listening at %s', server.name, server.url)
   console.log('**** Resources: ****')
   console.log('********************')
-  console.log(' /users')
-  console.log(' /users/:id')  
+  console.log(' /products')
+  //console.log(' /users/:id')  
 })
 
 server.use(restify.plugins.fullResponse());
 server.use(restify.plugins.bodyParser());
 
+server.get("/products", function(req,res,next){
+    console.log("get all");
+
+    productsDB.find({}, function(error, products){
+        ++GET_COUNTER
+        console.log("TEST: Gets: " + GET_COUNTER + "| Posts: " + POST_COUNTER )
+        res.send(products);
+    })
+})
 
 
