@@ -54,4 +54,21 @@ server.post('/products', function(req, res, next){
     })
 })
 
+server.del('/products/:pid', function(req,res,next){
+    console.log("Delete One")
+
+    productsDB.delete(req.params.pid, function(error, products){
+
+        res.send(204)
+    })
+})
+
+server.del('/products', function(req,res,next){
+    console.log("Delete All")
+
+    productsDB.delete({}, function(error, products){
+
+        res.send(204)
+    })
+})
 
