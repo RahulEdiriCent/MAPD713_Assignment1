@@ -1,0 +1,15 @@
+{
+  "name": "mapd713-a1-rahuledirisinghe",
+  "version": "1.0.0",
+  "description": "Assignment 1 for MAPD 713",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Rahul Edirisinghe",
+  "license": "ISC",
+  "dependencies": {
+    "restify": "^11.1.0",
+    "restify-errors": "^8.0.2"
+  }
+}
