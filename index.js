@@ -59,7 +59,7 @@ server.get('/products/:pid', function(req,res,next){
     console.log("> products/"+ req.params.pid +" GET: received request");
 
     //function to find products
-    productsDB.find({}, function(error, product){
+    productsDB.find({productId: Number(req.params.pid)}, function(error, product){
         if (error){//check for errors
             //if error occurred, then send a Error message and go to next function
             return next(new Error(JSON.stringify("ERROR! " + error.errors)))
@@ -72,7 +72,7 @@ server.get('/products/:pid', function(req,res,next){
             
             if(product){//if product was found
                 //returns found product
-                res.send(products);
+                res.send(product);
             }else{//if product was not found
                 console.log("Cound not find product with Id: " + req.params.pid)
                 res.send(404)
@@ -115,7 +115,7 @@ server.post('/products', function(req, res, next){
             else{//if no errors proceed to display relevant messages and send succesfull response
                 ++POST_COUNTER //increament counter
                 console.log("< products POST: send request, sent product");
-                console.log("Server Requests --> Gets: " + GET_COUNTER + "| Posts: " + POST_COUNTER )//show how many get and post request were made
+                console.log("Server Requests --> Gets: " + GET_COUNTER + "| Posts: " + POST_COUNTER );//show how many get and post request were made
                 
                 //send newly created/added product alongside corresponding status code and product data
                 res.send(201, product)
@@ -129,10 +129,10 @@ server.del('/products/:pid', function(req,res,next){
     console.log("> products/" +req.params.pid + " DELETE: received request");
 
     //delete specified product using delete
-    productsDB.delete(req.params.pid, function(error, product){
+    productsDB.delete({productId: Number(req.params.pid)}, function(error, product){
         if (error){//check for errors
             //if error occurred, then send a Error message and go to next function
-            return next(new Error(JSON.stringify("ERROR! " + error.errors)))
+            return next(new Error(JSON.stringify("ERROR! " + error.errors)));
         }
         else{//if no errors proceed to display relevant messages and send succesfull response
             console.log("< products/" +req.params.pid + " DELETE: sending response");
@@ -148,13 +148,15 @@ server.del('/products', function(req,res,next){
 
     //delete all stored produtcs using delete
     productsDB.delete({}, function(error, products){
+        console.log("< products DELETE: sending response");
         if (error){//check for errors
             //if error occurred, then send a Error message and go to next function
+            console.log(":::")
             return next(new Error(JSON.stringify("ERROR! " + error.errors)))
         }
         else{//if no errors proceed to display relevant messages and send status
-            console.log("< products DELETE: sending response");
-            res.send(204)
+            
+            res.send(204,products)
         }
     })
 })
