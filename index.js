@@ -128,7 +128,7 @@ server.post('/products', function(req, res, next){
 server.del('/products/:pid', function(req,res,next){
     console.log("> products/" +req.params.pid + " DELETE: received request");
 
-    //delete specified product using delete
+    //delete specified product using deleteOne
     productsDB.deleteOne({productId: Number(req.params.pid)}, function(error, product){
         if (error){//check for errors
             //if error occurred, then send a Error message and go to next function
@@ -146,7 +146,7 @@ server.del('/products/:pid', function(req,res,next){
 server.del('/productsp', function(req,res,next){
     console.log("> products DELETE: received request")
 
-    //delete all stored produtcs using delete
+    //delete all stored produtcs using deleteMany
     productsDB.deleteMany({}, function(error, products){
         console.log("< products DELETE: sending response");
         if (error){//check for errors
