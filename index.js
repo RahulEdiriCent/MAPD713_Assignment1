@@ -4,7 +4,7 @@
 //App is a simple server that stores product objects, can get, post and delete
 
 let SERVER_NAME = 'product-api' //server name
-let PORT = 8082; //set server port
+let PORT = 3000; //set server port
 let HOST = '127.0.0.1';
 let POST_COUNTER = 0;
 let GET_COUNTER = 0;
@@ -78,8 +78,8 @@ server.get('/products/:pid', function(req,res,next){
                 res.send(404)
             }
         }
-    })
-})
+    });
+});
 
 //POST FUNCTIONALITY============================================
 //post function that adds a new product to the system------------
@@ -120,7 +120,7 @@ server.post('/products', function(req, res, next){
                 //send newly created/added product alongside corresponding status code and product data
                 res.send(201, product)
             }
-        })
+        });
 })
 
 //DELETE FUNCTIONALITY==============================================
@@ -129,7 +129,7 @@ server.del('/products/:pid', function(req,res,next){
     console.log("> products/" +req.params.pid + " DELETE: received request");
 
     //delete specified product using delete
-    productsDB.delete({productId: Number(req.params.pid)}, function(error, product){
+    productsDB.deleteOne({productId: Number(req.params.pid)}, function(error, product){
         if (error){//check for errors
             //if error occurred, then send a Error message and go to next function
             return next(new Error(JSON.stringify("ERROR! " + error.errors)));
@@ -138,16 +138,16 @@ server.del('/products/:pid', function(req,res,next){
             console.log("< products/" +req.params.pid + " DELETE: sending response");
             res.send(204)
         }
-    })
-})
+    });
+});
 
 
 //add server delete functionality that removes all products---------------------------
-server.del('/products', function(req,res,next){
+server.del('/productsp', function(req,res,next){
     console.log("> products DELETE: received request")
 
     //delete all stored produtcs using delete
-    productsDB.delete({}, function(error, products){
+    productsDB.deleteMany({}, function(error, products){
         console.log("< products DELETE: sending response");
         if (error){//check for errors
             //if error occurred, then send a Error message and go to next function
@@ -158,6 +158,6 @@ server.del('/products', function(req,res,next){
             
             res.send(204,products)
         }
-    })
-})
+    });
+});
 
