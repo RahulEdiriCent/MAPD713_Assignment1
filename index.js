@@ -143,7 +143,7 @@ server.del('/products/:pid', function(req,res,next){
 
 
 //add server delete functionality that removes all products---------------------------
-server.del('/productsp', function(req,res,next){
+server.del('/products', function(req,res,next){
     console.log("> products DELETE: received request")
 
     //delete all stored produtcs using deleteMany
