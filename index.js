@@ -129,7 +129,7 @@ server.del('/products/:pid', function(req,res,next){
     console.log("> products/" +req.params.pid + " DELETE: received request");
 
     //delete specified product using deleteOne
-    productsDB.deleteOne({productId: Number(req.params.pid)}, function(error, product){
+    productsDB.delete({productId: Number(req.params.pid)}, function(error, product){
         if (error){//check for errors
             //if error occurred, then send a Error message and go to next function
             return next(new Error(JSON.stringify("ERROR! " + error.errors)));
